@@ -5,6 +5,7 @@
  */
 package ventanas_buscador;
 
+import ctrl.c.registros_dia;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -31,11 +33,10 @@ public class Ventana_busqueda_calendar {
 	JButton[] button = new JButton[49];
         
         
-    public Ventana_busqueda_calendar(){
         
-    }
-    
-    public static void main(String[] args) {
+    public void mostrar_V(){
+        
+   
         Ventana_busqueda_calendar ventana = new Ventana_busqueda_calendar();
         JFrame v = new JFrame();
         JPanel panel = new JPanel();
@@ -67,20 +68,70 @@ public class Ventana_busqueda_calendar {
         ldia.setBounds(810, 285, 50, 30);
         
         JButton mostrar = new JButton("Mostrar");
+        JButton mostrar1 = new JButton("Mostrar");
+        JButton mostrar2 = new JButton("Mostrar");
+
         
+        JButton regresa = new JButton("Regresar");
         
         
         mostrar.setBounds(700, 550, 200, 100);
-        
+        regresa.setBounds(350, 550, 200, 100);
         JTextField idbuscar = new JTextField("");
         JLabel idlabel = new JLabel("Buscar por ID:");
         idbuscar.setBounds(700, 450, 100, 30);
         idlabel.setBounds(700, 420, 100, 30);
         
+        
+        
+        
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 if (e.getSource()==regresa){
+                     
+                 }
+                  if (e.getSource()==mostrar){
+                     if (fecha.getText().equals("")){
+                        
+                            JOptionPane.showMessageDialog(null, "Selecciona o introduce una fecha"); 
+                         }else{
+                         registros_dia r = new registros_dia(fecha.getText());
+                         r.setVisible(false);
+                         r.showR();
+                         r.setVisible(true);
+                         v.dispose();
+                     }
+                 }
+                  
+                  if (e.getSource()==mostrar1){
+                       if (año.getText().equals("") || mes.getText().equals("") || dia.getText().equals("")) {
+                      JOptionPane.showMessageDialog(null, "Selecciona o introduce una fecha"); 
+                       }else{
+                           String date = año.getText()+"-"+mes.getText()+"-"+dia.getText();
+                           registros_dia r = new registros_dia(fecha.getText());
+                         r.setVisible(false);
+                         r.showR();
+                         r.setVisible(true);
+                         v.dispose();
+                     
+                       }
+                  }
+                  
+                  if (e.getSource()==mostrar2){
+                      if(idbuscar.getText().equals("")){
+                      JOptionPane.showMessageDialog(null, "Selecciona o introduce una fecha");     
+                      }
+                  }
+                  
+            }
+        };
+        regresa.addActionListener(listener);
+        mostrar.addActionListener(listener);
         v.add(idbuscar);
         v.add(idlabel);
         v.add(mostrar);
-        
+        v.add(regresa);
         v.add(año);
         v.add(dia);
         v.add(mes);

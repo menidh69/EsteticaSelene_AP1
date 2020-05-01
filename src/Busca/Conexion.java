@@ -19,19 +19,20 @@ import javax.swing.JOptionPane;
 public class Conexion {
     public static Connection miconexion() {
 
-        String ip = "";
-  final String URL_DB = "";
-        final String USER_DB = "";
-        final String PASS_DB = "";
+        String ip = "jdbc:postgresql://127.0.0.1:5432/Estetica";
+  final String URL_DB = "jdbc:postgresql://127.0.0.1:5432/Estetica";
+        final String USER_DB = "postgres";
+        final String PASS_DB = "manuel";
     
     int b = 0;
 
     try {
-     Class.forName("");
+     Class.forName("org.postgresql.Driver");
      System.out.println("Driver correcto!");
      b = 1;
     } catch(ClassNotFoundException ex) {
      JOptionPane.showMessageDialog(null, ex);
+        System.out.println("error archivo conexion");
     }
 
     Connection c = null;
@@ -43,6 +44,7 @@ public class Conexion {
       //JOptionPane.showMessageDialog(null, "Conexion correcta!");
      } catch(SQLException s) {
       System.out.println(s);
+         System.out.println("error archivo conexion");
       JOptionPane.showMessageDialog(null,s);
     }
 
