@@ -5,6 +5,7 @@
  */
 package ctrl.c;
 
+import Busca.SearchQuery;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
@@ -30,12 +31,12 @@ public class AgregarVenta extends javax.swing.JFrame {
     }
     
     public void agregarventa(){       
-        double precioprod,subtot,tot,total1 = 0;
+        int precioprod,subtot,tot,total1 = 0;
         int cantidadprod;
         if (seleccion.getSelectedIndex()== 1) {   
             
             cantidadprod = Integer.parseInt(cantidad.getSelectedItem().toString());            
-            precioprod = Double.parseDouble(this.precio.getText());
+            precioprod = Integer.parseInt(this.precio.getText());
             subtot = cantidadprod*precioprod;                  
             this.subtotal.setText(String.valueOf(subtot));                   
                 tot = subtot;
@@ -43,7 +44,7 @@ public class AgregarVenta extends javax.swing.JFrame {
         }
           if (seleccion.getSelectedIndex()== 2) {             
             cantidadprod = Integer.parseInt(cantidad.getSelectedItem().toString());           
-            precioprod = Double.parseDouble(this.precio.getText());
+            precioprod = Integer.parseInt(this.precio.getText());
             subtot = cantidadprod*precioprod;                  
             this.subtotal.setText(String.valueOf(subtot));           
                 tot = subtot;
@@ -73,8 +74,6 @@ public class AgregarVenta extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         total = new javax.swing.JTextField();
         precio = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
         add = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -108,10 +107,25 @@ public class AgregarVenta extends javax.swing.JFrame {
         jLabel4.setText("Subtotal");
 
         cantidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "1", "2", "3", "4", "5", "6", "7" }));
+        cantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantidadActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Total");
 
-        jLabel6.setText("ID:");
+        total.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalActionPerformed(evt);
+            }
+        });
+
+        precio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precioActionPerformed(evt);
+            }
+        });
 
         add.setText("Agregar");
         add.addActionListener(new java.awt.event.ActionListener() {
@@ -125,19 +139,13 @@ public class AgregarVenta extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
+                        .addGap(14, 14, 14)
                         .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(seleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(10, 10, 10)
+                    .addComponent(seleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -145,7 +153,7 @@ public class AgregarVenta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -156,20 +164,16 @@ public class AgregarVenta extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(add)
-                .addGap(25, 25, 25))
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -183,9 +187,9 @@ public class AgregarVenta extends javax.swing.JFrame {
                     .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(add)
-                .addGap(7, 7, 7))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jLabel7.setText("Detalle de la Venta");
@@ -231,11 +235,11 @@ public class AgregarVenta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -261,19 +265,26 @@ public class AgregarVenta extends javax.swing.JFrame {
         agregarventa();            
         this.model.addRow(new Object[]{this.seleccion.getSelectedItem(),this.precio.getText(),this.cantidad.getSelectedItem(),
         this.subtotal.getText(),this.total.getText()});
-        double suma1,suma2=0;
+        int suma1,suma2=0;
         int totalventa = model.getRowCount();
         for (int i = 0; i < (totalventa); i++) {
-            suma1 = Double.parseDouble(String.valueOf(model.getValueAt(i, 3)));
+            suma1 = Integer.parseInt(String.valueOf(model.getValueAt(i, 3)));
             suma2 += suma1;           
         }
         this.total.setText(String.valueOf(suma2));
         totalventa =-1;  
+        precio.setText("");
+        subtotal.setText("");
+        seleccion.setSelectedIndex(0);
+        cantidad.setSelectedIndex(0);
 // TODO add your handling code here:
     }//GEN-LAST:event_addActionPerformed
 
     private void seleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionActionPerformed
-        // TODO add your handling code here:
+        if(precio.getText().equals("") || cantidad.getSelectedItem().equals("Seleccionar")) {
+           } else {
+            agregarventa();
+           }
     }//GEN-LAST:event_seleccionActionPerformed
 
     private void subtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subtotalActionPerformed
@@ -281,7 +292,10 @@ public class AgregarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_subtotalActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
+        
+        SearchQuery q = new SearchQuery();
+        q.insertarRegistro(Integer.parseInt(total.getText()));
         JOptionPane.showMessageDialog(this,"Venta registrada.","Exito",JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -291,6 +305,24 @@ public class AgregarVenta extends javax.swing.JFrame {
         principal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadActionPerformed
+        if(precio.getText().equals("") || seleccion.getSelectedItem().equals("Seleccionar")) {
+           } else {
+            agregarventa();
+           }
+    }//GEN-LAST:event_cantidadActionPerformed
+
+    private void precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioActionPerformed
+       if(cantidad.getSelectedItem().equals("Seleccionar") || seleccion.getSelectedItem().equals("Seleccionar")) {
+           } else {
+            agregarventa();
+           }
+    }//GEN-LAST:event_precioActionPerformed
+
+    private void totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_totalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,12 +370,10 @@ public class AgregarVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField precio;
     private javax.swing.JComboBox seleccion;
     private javax.swing.JTextField subtotal;

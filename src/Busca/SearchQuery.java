@@ -9,8 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -128,8 +132,35 @@ public class SearchQuery {
         
     }
         
+    
+        
     return modelo;
 }
-    
+    public void insertarRegistro(int total){
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date date = new Date();
+        String now = formatter.format(date);
+        java.sql.Date fecha = java.sql.Date.valueOf(now);
+       
+        Conexion con = new Conexion();
+        Connection c = con.miconexion();
+        
+        if (c != null) {
+
+
+        try {
+
+          Statement st = c.createStatement();
+         PreparedStatement pstmt = c.prepareStatement("INSERT INTO \"Venta\" (cantidad, fecha) VALUES (?,?);");
+         pstmt.setInt(1, total); 
+         pstmt.setDate(2, fecha);
+          pstmt.executeUpdate();
+          c.close();            
+    }catch(Exception e){
+        
+    }
+    }
+    }
   
 }
