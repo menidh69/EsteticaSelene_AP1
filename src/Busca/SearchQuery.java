@@ -5,6 +5,7 @@
  */
 package Busca;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -108,10 +109,11 @@ public class SearchQuery {
                     case "dia-mes":
                         modelo.addColumn("fecha");
                         modelo.addColumn("total_dinero");
-                        
-                        pstmt = c.prepareStatement("SELECT fecha, cantidad AS total_dinero FROM \"Venta\"  EXTRACT(month FROM fecha) = ? AND  EXTRACT(year FROM fecha) = ? ORDER BY EXTRACT(day FROM fecha)");
-                        pstmt.setString(1, date);
-                        pstmt.setString(2, date2);
+                        BigDecimal num1 = new BigDecimal(date2);
+                        BigDecimal num2 = new BigDecimal(date);
+                        pstmt = c.prepareStatement("SELECT fecha, cantidad AS total_dinero FROM \"Venta\" WHERE EXTRACT(year FROM fecha) = ? AND  EXTRACT(month FROM fecha) = ? ORDER BY EXTRACT(day FROM fecha)");
+                        pstmt.setBigDecimal(1, num2);
+                        pstmt.setBigDecimal(2, num1);
                         rs =pstmt.executeQuery();
                         while(rs.next()) {
                             modelo.addRow(new Object[]{rs.getString("fecha"), rs.getInt("total_dinero")});

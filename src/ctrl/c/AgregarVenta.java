@@ -115,6 +115,7 @@ public class AgregarVenta extends javax.swing.JFrame {
 
         jLabel5.setText("Total");
 
+        total.setEnabled(false);
         total.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 totalActionPerformed(evt);
@@ -262,6 +263,23 @@ public class AgregarVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        boolean numeric = true;
+        if(precio.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Ingrese una precio");
+        }else{
+        try{
+            int i = Integer.parseInt(precio.getText());
+        }catch(NumberFormatException nfe){
+            numeric=false;
+        }    
+        if(!numeric){
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+            precio.setText("");
+        }else{
+        if(precio.getText().length()>4){
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad menor a 10000");
+            precio.setText("");
+        }else{
         agregarventa();            
         this.model.addRow(new Object[]{this.seleccion.getSelectedItem(),this.precio.getText(),this.cantidad.getSelectedItem(),
         this.subtotal.getText(),this.total.getText()});
@@ -277,6 +295,9 @@ public class AgregarVenta extends javax.swing.JFrame {
         subtotal.setText("");
         seleccion.setSelectedIndex(0);
         cantidad.setSelectedIndex(0);
+        }
+        }
+        }
 // TODO add your handling code here:
     }//GEN-LAST:event_addActionPerformed
 

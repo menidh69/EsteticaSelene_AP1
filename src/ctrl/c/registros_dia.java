@@ -154,7 +154,7 @@ public class registros_dia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Principal e = new Principal();
+        Busqueda_opciones e = new Busqueda_opciones();
         e.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:

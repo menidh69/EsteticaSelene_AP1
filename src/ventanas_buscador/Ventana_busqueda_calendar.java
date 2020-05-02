@@ -12,7 +12,11 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,7 +36,11 @@ public class Ventana_busqueda_calendar {
 	JDialog d;
 	JButton[] button = new JButton[49];
         
-        
+    public static void main(String[] args) {
+        Ventana_busqueda_calendar n = new Ventana_busqueda_calendar();
+        n.mostrar_V();
+    }
+    
         
     public void mostrar_V(){
         
@@ -49,23 +57,51 @@ public class Ventana_busqueda_calendar {
         fecha.setBounds(700, 100, 100, 30);
         ventana.show(panel, ventana, fecha);
         
+        String [] dias31 = new String[] {"01","02","03","04","05","06","07","08","09","10",
+            "11","12","13","14","15","16","17","18","19","20",
+        "21","22","23","24","25","26","27","28","29","30","31"};
+        String [] dias30 = new String[] {"01","02","03","04","05","06","07","08","09","10",
+            "11","12","13","14","15","16","17","18","19","20",
+        "21","22","23","24","25","26","27","28","29","30"};;
+        String [] dias28 = new String[] {"01","02","03","04","05","06","07","08","09","10",
+            "11","12","13","14","15","16","17","18","19","20",
+        "21","22","23","24","25","26","27","28", "29"};;
+        
         
         JLabel introducir = new JLabel("Introducir fecha");
-        JTextField año = new JTextField();
-        JTextField mes = new JTextField();
-        JTextField dia = new JTextField();
-        
+        JComboBox año = new JComboBox<>();
+        JComboBox mes = new JComboBox<>();
+        JComboBox dia = new JComboBox<>();
+        año.addItem("Año");
+        año.addItem("2020");
+        año.addItem("2019");
+        año.addItem("2018");
+        año.addItem("2017");
+        mes.addItem("Mes");
+        mes.addItem("01");
+        mes.addItem("02");
+        mes.addItem("03");
+        mes.addItem("04");
+        mes.addItem("05");
+        mes.addItem("06");
+        mes.addItem("07");
+        mes.addItem("08");
+        mes.addItem("09");
+        mes.addItem("10");
+        mes.addItem("11");
+        mes.addItem("12");
+        dia.addItem("Dia");
         JLabel laño = new JLabel("Año");
         JLabel lmes = new JLabel("Mes");
         JLabel ldia = new JLabel("Dia");
         
         introducir.setBounds(710, 215, 100, 30);
-        año.setBounds(700, 250, 50, 30);
-        mes.setBounds(750, 250, 50, 30);
-        dia.setBounds(800, 250, 50, 30);
-        laño.setBounds(710, 285, 50, 30);
+        año.setBounds(650, 250, 100, 30);
+        mes.setBounds(760, 250, 80, 30);
+        dia.setBounds(850, 250, 80, 30);
+        laño.setBounds(650, 285, 50, 30);
         lmes.setBounds(760, 285, 50, 30);
-        ldia.setBounds(810, 285, 50, 30);
+        ldia.setBounds(850, 285, 50, 30);
         
         JButton mostrar = new JButton("Mostrar");
         JButton mostrar1 = new JButton("Mostrar");
@@ -77,11 +113,31 @@ public class Ventana_busqueda_calendar {
         
         mostrar.setBounds(700, 550, 200, 100);
         regresa.setBounds(350, 550, 200, 100);
-        JTextField idbuscar = new JTextField("");
-        JLabel idlabel = new JLabel("Buscar por ID:");
-        idbuscar.setBounds(700, 450, 100, 30);
-        idlabel.setBounds(700, 420, 100, 30);
+       
         
+        mes.addItemListener(new ItemListener(){
+            @Override
+             public void itemStateChanged(ItemEvent e) {
+                 
+                 if(mes.getSelectedItem().equals("Mes")){
+                     dia.removeAllItems();
+                     dia.addItem("Dia");
+                 }
+                 if(mes.getSelectedItem().equals("01") || mes.getSelectedItem().equals("03") ||
+                         mes.getSelectedItem().equals("05") || mes.getSelectedItem().equals("07") || mes.getSelectedItem().equals("08") ||
+                         mes.getSelectedItem().equals("10") || mes.getSelectedItem().equals("12")){
+                        dia.setModel(new DefaultComboBoxModel(dias31));
+                 }if(mes.getSelectedItem().equals("02")){
+                     dia.setModel(new DefaultComboBoxModel(dias28));
+                 }
+                 if(mes.getSelectedItem().equals("04") || mes.getSelectedItem().equals("06") ||
+                         mes.getSelectedItem().equals("09") || mes.getSelectedItem().equals("11") ){
+                     dia.setModel(new DefaultComboBoxModel(dias30));
+                 }
+                 
+             }
+        
+    });
         
         
         
@@ -92,44 +148,40 @@ public class Ventana_busqueda_calendar {
                      
                  }
                   if (e.getSource()==mostrar){
-                     if (fecha.getText().equals("")){
-                        
-                            JOptionPane.showMessageDialog(null, "Selecciona o introduce una fecha"); 
-                         }else{
+                      
+                     if (!fecha.getText().equals("")){
                          registros_dia r = new registros_dia(fecha.getText());
+                         
+                         r.setVisible(false);
+                         r.showR();
+                         
+                         r.setVisible(true);
+                         v.dispose();
+                             
+                         }else{
+                         if (año.getSelectedItem().equals("Año") || mes.getSelectedItem().equals("Mes") || dia.getSelectedItem().equals("Dia")) {
+                         JOptionPane.showMessageDialog(null, "Selecciona o introduce una fecha");
+                         }else{
+                         String date = año.getSelectedItem().toString()+"-"+mes.getSelectedItem().toString()+"-"+dia.getSelectedItem().toString();
+                             System.out.println(date);
+                         registros_dia r = new registros_dia(date);
                          r.setVisible(false);
                          r.showR();
                          r.setVisible(true);
                          v.dispose();
+                         }
                      }
                  }
                   
-                  if (e.getSource()==mostrar1){
-                       if (año.getText().equals("") || mes.getText().equals("") || dia.getText().equals("")) {
-                      JOptionPane.showMessageDialog(null, "Selecciona o introduce una fecha"); 
-                       }else{
-                           String date = año.getText()+"-"+mes.getText()+"-"+dia.getText();
-                           registros_dia r = new registros_dia(fecha.getText());
-                         r.setVisible(false);
-                         r.showR();
-                         r.setVisible(true);
-                         v.dispose();
-                     
-                       }
-                  }
+                 
                   
-                  if (e.getSource()==mostrar2){
-                      if(idbuscar.getText().equals("")){
-                      JOptionPane.showMessageDialog(null, "Selecciona o introduce una fecha");     
-                      }
-                  }
+                  
                   
             }
         };
         regresa.addActionListener(listener);
         mostrar.addActionListener(listener);
-        v.add(idbuscar);
-        v.add(idlabel);
+       
         v.add(mostrar);
         v.add(regresa);
         v.add(año);
